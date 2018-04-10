@@ -1,4 +1,4 @@
-from sklearn.metrics import cohen_kappa_score
+
 
 
 def confusion_matrix(predicted,actual):
@@ -25,9 +25,7 @@ def confusion_matrix(predicted,actual):
 
 	'''
 
-def kappa_score(predicted,actual):
 
-	return cohen_kappa_score(predicted,actual)
 
 def MAE(predicted,actual):
 	sum=0
@@ -47,7 +45,10 @@ def precision_recall(predicted,actual):
 	recall_1 = float(con_mat[0][0] ) / (con_mat[0][0] + con_mat[0][1])
 	recall_2 = float(con_mat[1][1] ) / (con_mat[1][0] + con_mat[1][1])
 
-	return "Precision and Recall for Benign:\t\t" + str(precision_1) + "\t\t"+ str(recall_1) + "\nPrecision and Recall for Malignant: \t\t" + str(precision_2)  +"\t\t" + str(recall_2)
+	return "\nPrecision and Recall for Benign:\t\t" + str(precision_1) + "\t\t"+ str(recall_1) + "\nPrecision and Recall for Malignant: \t\t" + str(precision_2)  +"\t\t" + str(recall_2)
+def kappa_score(predicted,actual):
+	from sklearn.metrics import cohen_kappa_score
+	return cohen_kappa_score(predicted,actual)
 
 def accuracy(predicted,actual):
 	con_mat = confusion_matrix(predicted,actual)

@@ -62,7 +62,7 @@ def getAccuracy(testSet, predictions):
 			correct += 1
 	return (correct/float(len(testSet))) * 100.0
 	
-def main(trainingSet,testSet):
+def predict(trainingSet,testSet):
 	# prepare data
 	# trainingSet=[]
 	# testSet=[]

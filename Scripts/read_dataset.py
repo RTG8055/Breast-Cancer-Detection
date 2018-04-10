@@ -6,7 +6,7 @@ import Evaluation as ev
 import knn as knn
 import SVM as svm
 import matplotlib.pyplot as plt
-import seaborn as sns
+
 '''
    1. Sample code number           
    2. Clump Thickness 
@@ -45,15 +45,15 @@ test_data = my_data[train:]
 
 
 tree= dt.buildtree(train_data)
-predicted_results = dt.predict(test_data,tree)
 expected_results = [row[-1] for row in test_data]
+predicted_results = dt.predict(test_data,tree)
 # print(predicted_results,expected_results)
 
 
-predicted_results2 = knn.main(train_data,test_data)
+predicted_results2 = knn.predict(train_data,test_data)
 predicted_results3 = svm.predict(train_data,test_data)
 
-print("----Confusion Matrix----")
+print("\n----Confusion Matrix----\n")
 
 '''
       predicted 
@@ -68,37 +68,37 @@ c2 = ev.confusion_matrix(predicted_results2,expected_results)
 c3 = ev.confusion_matrix(predicted_results3,expected_results)
 print("Decision Tree")
 print(c1)
-print("K nearest Neighbours")
+print("\nK nearest Neighbours")
 print(c2)
-print("SVM")
+print("\nSVM")
 print(c3)
 
 
-print("----Kappa Score----")
+print("\n----Kappa Score----\n")
 print("Decision Tree")
 print(ev.kappa_score(predicted_results,expected_results))
-print("K nearest Neighbours")
+print("\nK nearest Neighbours")
 print(ev.kappa_score(predicted_results2,expected_results))
-print("SVM")
+print("\nSVM")
 print(ev.kappa_score(predicted_results3,expected_results))
-print("----Mean Absolute Error----")
+print("\n----Mean Absolute Error----\n")
 ma1 = ev.MAE(predicted_results,expected_results)
 ma2 = ev.MAE(predicted_results2,expected_results)
 ma3 = ev.MAE(predicted_results3,expected_results)
 print("Decision Tree")
 print ma1
-print("K nearest Neighbours")
+print("\nK nearest Neighbours")
 print ma2
-print("SVM")
+print("\nSVM")
 print ma3
 
 
-print("----Precision and Recall----")
+print("\n----Precision and Recall----\n")
 print("Decision Tree")
 print(ev.precision_recall(predicted_results,expected_results))
-print("K nearest Neighbours")
+print("\nK nearest Neighbours")
 print(ev.precision_recall(predicted_results2,expected_results))
-print("SVM")
+print("\nSVM")
 print(ev.precision_recall(predicted_results3,expected_results))
 
 
@@ -106,6 +106,13 @@ print(ev.precision_recall(predicted_results3,expected_results))
 acc1= ev.accuracy(predicted_results,expected_results)
 acc2= ev.accuracy(predicted_results2,expected_results)
 acc3= ev.accuracy(predicted_results3,expected_results)
+print("Decision Tree")
+print acc1
+print("\nK nearest Neighbours")
+print acc2
+print("\nSVM")
+print acc3
+
 fig ,axes = plt.subplots(2,2)
 
 plt.tight_layout()
