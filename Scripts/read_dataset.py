@@ -1,13 +1,12 @@
 import numpy as np
-import pandas as pd
 import sys
 sys.path.append('/media/rahul/Stuff/github/rtg8055/Breast-Cancer-Detection/Scripts')
 import decision_tree as dt
-from sklearn.model_selection import train_test_split
 import Evaluation as ev
 import knn as knn
 import SVM as svm
 import matplotlib.pyplot as plt
+import seaborn as sns
 '''
    1. Sample code number           
    2. Clump Thickness 
@@ -22,25 +21,6 @@ import matplotlib.pyplot as plt
   11. Class:                       
  '''
 
-def check(x):
-  if(x=='?'): return None
-data = pd.read_csv("../Data/breast-cancer-wisconsin-data.csv",header=None)#,usecols=["Sample code number","Clump Thickness","Uniformity of Cell Size","Uniformity of Cell Shape","Marginal Adhesion","Single Epithelial Cell Size","Bare Nuclei","Bland Chromatin","Normal Nucleoli","Mitoses","Class"])
-data.columns = ["Sample code number","Clump Thickness","Uniformity of Cell Size","Uniformity of Cell Shape","Marginal Adhesion","Single Epithelial Cell Size","Bare Nuclei","Bland Chromatin","Normal Nucleoli","Mitoses","Class"]
-print(data.head())
-print(data.shape)
-data.drop("Sample code number",axis=1,inplace=True)
-print(data.shape)
-data.dropna(inplace=True)
-print(data.shape)
-for i in data.columns:
-  data[i].apply(check)
-  data[i].dropna(inplace=True)
-print(data.shape)
-
-y = data['Class']
-X = data.drop('Class',axis=1)
-X_train,X_test,y_train,y_test = train_test_split(X,y,random_state=0)
-print(X_train.shape,X_test.shape,y_train.shape,y_test.shape)
 
 
 my_data = []
@@ -86,26 +66,60 @@ actual 2 a    b
 c1 = ev.confusion_matrix(predicted_results,expected_results)
 c2 = ev.confusion_matrix(predicted_results2,expected_results)
 c3 = ev.confusion_matrix(predicted_results3,expected_results)
+print("Decision Tree")
 print(c1)
+print("K nearest Neighbours")
 print(c2)
+print("SVM")
 print(c3)
-fig ,axes = plt.subplots(2,2)
 
-axes[0,0].plot([1,2,3],[c1[0][0],c2[0][0],c3[0][0]])
-axes[0,0].set_title("Correctly Classified instances")
-# axes[0,0].xlabel("Method used")
-# axes[0,0].ylabel("count")
-# axes[0,0].yticks(range(150,165,1))
-plt.show()
 
 print("----Kappa Score----")
+print("Decision Tree")
 print(ev.kappa_score(predicted_results,expected_results))
+print("K nearest Neighbours")
 print(ev.kappa_score(predicted_results2,expected_results))
+print("SVM")
+print(ev.kappa_score(predicted_results3,expected_results))
 print("----Mean Absolute Error----")
-print(ev.MAE(predicted_results,expected_results))
-print(ev.MAE(predicted_results2,expected_results))
+ma1 = ev.MAE(predicted_results,expected_results)
+ma2 = ev.MAE(predicted_results2,expected_results)
+ma3 = ev.MAE(predicted_results3,expected_results)
+print("Decision Tree")
+print ma1
+print("K nearest Neighbours")
+print ma2
+print("SVM")
+print ma3
+
+
 print("----Precision and Recall----")
+print("Decision Tree")
 print(ev.precision_recall(predicted_results,expected_results))
+print("K nearest Neighbours")
 print(ev.precision_recall(predicted_results2,expected_results))
+print("SVM")
+print(ev.precision_recall(predicted_results3,expected_results))
+
+
+
+acc1= ev.accuracy(predicted_results,expected_results)
+acc2= ev.accuracy(predicted_results2,expected_results)
+acc3= ev.accuracy(predicted_results3,expected_results)
+fig ,axes = plt.subplots(2,2)
+
+plt.tight_layout()
+axes[0,0].plot([1,2,3],[c1[0][0],c2[0][0],c3[0][0]])
+axes[0,0].set_title("Correctly Classified instances")
+axes[0,1].plot([1,2,3],[c1[1][1],c2[1][1],c3[1][1]])
+axes[0,1].set_title("Incorrectly Classified instances")
+axes[1,0].plot([1,2,3],[acc1,acc2,acc3])
+axes[1,0].set_title("Accuracy")
+axes[1,1].plot([1,2,3],[ma1,ma2,ma3])
+axes[1,1].set_title("Mean Absolute Error")
+
+plt.show()
+
+
 
 

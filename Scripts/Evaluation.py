@@ -47,5 +47,9 @@ def precision_recall(predicted,actual):
 	recall_1 = float(con_mat[0][0] ) / (con_mat[0][0] + con_mat[0][1])
 	recall_2 = float(con_mat[1][1] ) / (con_mat[1][0] + con_mat[1][1])
 
-	return "Precision and Recall for Benign:" + str(precision_1) + "\t"+ str(recall_1) + "\n Precision and Recall for Malignant: " + str(precision_2)  +"\t" + str(recall_2)
+	return "Precision and Recall for Benign:\t\t" + str(precision_1) + "\t\t"+ str(recall_1) + "\nPrecision and Recall for Malignant: \t\t" + str(precision_2)  +"\t\t" + str(recall_2)
 
+def accuracy(predicted,actual):
+	con_mat = confusion_matrix(predicted,actual)
+
+	return float(con_mat[0][0] + con_mat[1][1]) / (con_mat[0][0] + con_mat[1][0] + con_mat[0][1] + con_mat[1][1] )
